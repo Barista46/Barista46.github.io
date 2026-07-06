@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>アンケートフォーム</title>
+    <title>Googleに保存するアンケート</title>
     <style>
         body { font-family: sans-serif; max-width: 500px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
         input[type="text"], select, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { background-color: #007bff; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; }
-        button:hover { background-color: #0056b3; }
+        button { background-color: #28a745; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; width: 100%; font-size: 16px; }
+        button:hover { background-color: #218838; }
+        button:disabled { background-color: #cccccc; }
     </style>
 </head>
 <body>
 
-    <h2>ユーザーアンケート</h2>
+    <h2>ユーザーアンケート（Google保存版）</h2>
     
     <form id="surveyForm">
         <div class="form-group">
@@ -35,48 +36,51 @@
 
         <div class="form-group">
             <label for="comments">ご意見・ご要望：</label>
-            <textarea id="comments" rows="4" placeholder="自由にご記入ください（カンマは避けてください）"></textarea>
+            <textarea id="comments" rows="4" placeholder="自由にご記入ください"></textarea>
         </div>
 
-        <button type="submit">CSVとして保存・ダウンロード</button>
+        <button type="submit" id="submitBtn">アンケートを送信する</button>
     </form>
 
     <script>
+        // ⚠️ ここにステップ1でコピーしたGoogle Apps ScriptのURLを貼り付けてください
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbxmc8EdCh0bGRpyrE4fNI3yerAgWd-1vPEE3iwJpW-QTJ68P667u8RZdwbtKuwVB_5d8Q/exec";
+
         document.getElementById('surveyForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // ページのリロードを防ぐ
+            event.preventDefault();
 
-            // 1. フォームの入力値を取得
-            const name = document.getElementById('name').value;
-            const satisfaction = document.getElementById('satisfaction').value;
-            // CSVの区切り文字である「カンマ」をスペースに置換してエラーを防ぐ
-            const comments = document.getElementById('comments').value.replace(/,/g, ' ');
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "送信中...";
 
-            // 2. CSVのヘッダーとデータを作成
-            const headers = ["名前", "満足度", "ご意見"];
-            const rows = [name, satisfaction, comments];
+            // 送信するデータ
+            const data = {
+                name: document.getElementById('name').value,
+                satisfaction: document.getElementById('satisfaction').value,
+                comments: document.getElementById('comments').value
+            };
 
-            // Excelなどで文字化けしないように「BOM（Byte Order Mark）」を追加
-            const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
-            
-            // CSV文字列の組み立て
-            const csvContent = headers.join(",") + "\n" + rows.join(",");
-
-            // 3. ダウンロード用のBlobオブジェクトを作成
-            const blob = new Blob([bom, csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-
-            // 4. 見えないリンクを作って自動クリックし、ダウンロードさせる
-            const link = document.createElement("a");
-            link.setAttribute("href", url);
-            link.setAttribute("download", `survey_${Date.now()}.csv`); // ファイル名にタイムスタンプを付与
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            // フォームをリセット
-            document.getElementById('surveyForm').reset();
-            alert('アンケートデータをCSVとしてダウンロードしました。');
+            // fetch APIを使ってGoogleにデータを非同期で送信（POST）
+            fetch(GAS_URL, {
+                method: "POST",
+                mode: "no-cors", // クロスドメイン通信のエラーを防ぐ
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                alert("アンケートを送信しました。ご協力ありがとうございました！");
+                document.getElementById('surveyForm').reset();
+            })
+            .catch(error => {
+                console.error("エラーが発生しました:", error);
+                alert("送信に失敗しました。時間をおいて再度お試しください。");
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "アンケートを送信する";
+            });
         });
     </script>
 
