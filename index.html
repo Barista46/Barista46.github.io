@@ -3,86 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Googleに保存するアンケート</title>
+    <title>2択クイズ 10問</title>
     <style>
-        body { font-family: sans-serif; max-width: 500px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
-        .form-group { margin-bottom: 15px; }
+        body { font-family: sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; background-color: #f9f9f9; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input[type="text"], select, textarea { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { background-color: #28a745; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 4px; width: 100%; font-size: 16px; }
-        button:hover { background-color: #218838; }
-        button:disabled { background-color: #cccccc; }
+        input[type="text"] { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        
+        /* クイズ全体のスタイル */
+        .quiz-card { border-left: 5px solid #007bff; background: #f8f9fa; padding: 15px; margin-bottom: 25px; border-radius: 0 8px 8px 0; }
+        .quiz-question { font-weight: bold; margin-bottom: 12px; font-size: 16px; }
+        .options { display: flex; gap: 20px; }
+        .options label { font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        
+        button { background-color: #007bff; color: white; border: none; padding: 12px 20px; cursor: pointer; border-radius: 5px; width: 100%; font-size: 18px; margin-top: 20px; transition: background 0.2s; }
+        button:hover { background-color: #0056b3; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
     </style>
 </head>
 <body>
 
-    <h2>ユーザーアンケート（Google保存版）</h2>
+<div class="container">
+    <h1>2択クイズ（全10問）</h1>
     
-    <form id="surveyForm">
+    <form id="quizForm">
         <div class="form-group">
             <label for="name">お名前：</label>
-            <input type="text" id="name" required placeholder="山田 太郎">
+            <input type="text" id="name" required placeholder="ひらがな または ニックネームでも可">
         </div>
 
-        <div class="form-group">
-            <label for="satisfaction">このサイトの満足度：</label>
-            <select id="satisfaction" required>
-                <option value="">選択してください</option>
-                <option value="満足">満足</option>
-                <option value="普通">普通</option>
-                <option value="不満">不満</option>
-            </select>
+        <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+
+        <div id="quiz-container">
+            
+            <div class="quiz-card">
+                <div class="quiz-question">Q1. 日本で一番高い山は「富士山」である。</div>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q1" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-question">Q2. トマトは「野菜」ではなく「果物」に分類される。</div>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q2" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-question">Q3. 地球は太陽の周りを回っている。</div>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q3" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-question">Q4. 犬の祖先はオオカミである。</div>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q4" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-question">Q5. 漢字の「品」という字は、口が3つでできている。</div>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q5" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-question">Q6. サッカーの1チームの人数は「12人」である。</div>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q6" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-question">Q7. オリンピックは3年に1度開催される。</div>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q7" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-question">Q8. カンガルーのお腹の袋にあるポケットは、メスにしかない。</div>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q8" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-question">Q9. タコにある心臓の数は「3つ」である。</div>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q9" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
+            <div class="quiz-card">
+                <div class="quiz-question">Q10. 食パンの「1斤（きん）」は、340g以上と定められている。</div>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="〇" required> 〇（正しい）</label>
+                    <label><input type="radio" name="q10" value="✕"> ✕（間違い）</label>
+                </div>
+            </div>
+
         </div>
 
-        <div class="form-group">
-            <label for="comments">ご意見・ご要望：</label>
-            <textarea id="comments" rows="4" placeholder="自由にご記入ください"></textarea>
-        </div>
-
-        <button type="submit" id="submitBtn">アンケートを送信する</button>
+        <button type="submit" id="submitBtn">回答を送信する</button>
     </form>
+</div>
 
-    <script>
-        // ⚠️ ここにステップ1でコピーしたGoogle Apps ScriptのURLを貼り付けてください
-        const GAS_URL = "https://script.google.com/macros/s/AKfycbxmc8EdCh0bGRpyrE4fNI3yerAgWd-1vPEE3iwJpW-QTJ68P667u8RZdwbtKuwVB_5d8Q/exec";
+<script>
+    // ⚠️ あなたのGoogle Apps ScriptのURLに書き換えてください
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbxwVgBmBLbTEHgZ7P5aLqn_9LQUZLrg3qh7h2oxF48C5SzyndBOU3OrZi1sKiC1InUG/exec";
 
-        document.getElementById('surveyForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+    document.getElementById('quizForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerText = "送信中...";
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = "送信中...";
 
-            // 送信するデータ
-            const data = {
-                name: document.getElementById('name').value,
-                satisfaction: document.getElementById('satisfaction').value,
-                comments: document.getElementById('comments').value
-            };
+        // 送信データの組み立て（GASの受け取り側に合わせる）
+        const data = {
+            name: document.getElementById('name').value,
+            q1: document.querySelector('input[name="q1"]:checked').value,
+            q2: document.querySelector('input[name="q2"]:checked').value,
+            q3: document.querySelector('input[name="q3"]:checked').value,
+            q4: document.querySelector('input[name="q4"]:checked').value,
+            q5: document.querySelector('input[name="q5"]:checked').value,
+            q6: document.querySelector('input[name="q6"]:checked').value,
+            q7: document.querySelector('input[name="q7"]:checked').value,
+            q8: document.querySelector('input[name="q8"]:checked').value,
+            q9: document.querySelector('input[name="q9"]:checked').value,
+            q10: document.querySelector('input[name="q10"]:checked').value
+        };
 
-            // fetch APIを使ってGoogleにデータを非同期で送信（POST）
-            fetch(GAS_URL, {
-                method: "POST",
-                mode: "no-cors", // クロスドメイン通信のエラーを防ぐ
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data)
-            })
-            .then(() => {
-                alert("アンケートを送信しました。ご協力ありがとうございました！");
-                document.getElementById('surveyForm').reset();
-            })
-            .catch(error => {
-                console.error("エラーが発生しました:", error);
-                alert("送信に失敗しました。時間をおいて再度お試しください。");
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.innerText = "アンケートを送信する";
-            });
+        fetch(GAS_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(() => {
+            alert("クイズの回答を送信しました！ご参加ありがとうございました。");
+            document.getElementById('quizForm').reset();
+        })
+        .catch(error => {
+            console.error("エラー:", error);
+            alert("送信に失敗しました。");
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = "回答を送信する";
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>
