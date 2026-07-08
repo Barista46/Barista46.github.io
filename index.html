@@ -29,10 +29,6 @@
     <h1> 感覚測定概論 アンケート <br>Minecraft <br> 危険を感じる鳴き声コンテスト </h1>
     
     <form id="quizForm">
-        <div class="form-group">
-            <label for="name">お名前：</label>
-            <input type="text" id="name" required placeholder="ひらがな または ニックネームでも可">
-        </div>
 
         <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
 
@@ -530,7 +526,7 @@
 
         // 送信データの組み立て（GASの受け取り側に合わせる）
         const data = {
-            name: document.getElementById('name').value,
+            name: document.querySelector('input[name="q0"]:checked').value,
             q0: document.querySelector('input[name="q0"]:checked').value,
             q1: document.querySelector('input[name="q1"]:checked').value,
             q2: document.querySelector('input[name="q2"]:checked').value,
