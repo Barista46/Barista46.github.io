@@ -39,10 +39,81 @@
         <div id="quiz-container">
             
             <div class="quiz-card">
-                <div class="quiz-question">Q1. 日本で一番高い山は「富士山」である。</div>
+                <div class="quiz-question">
+                    Q1. 2つの音声を聴き、雑音が少ない方を選択してください。
+                </div>
+
+                <div class="audio-buttons">
+                    <button type="button" onclick="playAudio('audioA1', this)">
+                        ▶ 音声A
+                    </button>
+
+                    <button type="button" onclick="playAudio('audioB1', this)">
+                        ▶ 音声B
+                    </button>
+                </div>
+
+                <audio id="audioA1">
+                    <source src="q1_A.wav" type="audio/wav">
+                </audio>
+
+                <audio id="audioB1">
+                    <source src="q1_B.wav" type="audio/wav">
+                </audio>
+
+                <script>
+                    let currentAudio = null;
+                    let currentButton = null;
+
+                    function playAudio(id, button) {
+                        const audio = document.getElementById(id);
+
+                        // 他の音声を停止
+                        if (currentAudio && currentAudio !== audio) {
+                            currentAudio.pause();
+                            currentAudio.currentTime = 0;
+
+                            if (currentButton) {
+                                currentButton.textContent =
+                                    currentButton.dataset.label;
+                            }
+                        }
+
+                        // 再生・停止切替
+                        if (audio.paused) {
+                            audio.play();
+                            button.dataset.label = button.textContent;
+                            button.textContent = "⏸ 停止";
+
+                            currentAudio = audio;
+                            currentButton = button;
+                        } else {
+                            audio.pause();
+                            audio.currentTime = 0;
+                            button.textContent = button.dataset.label;
+
+                            currentAudio = null;
+                            currentButton = null;
+                        }
+
+                        audio.onended = function() {
+                            button.textContent = button.dataset.label;
+                            currentAudio = null;
+                            currentButton = null;
+                        };
+                    }
+                </script>
+
                 <div class="options">
-                    <label><input type="radio" name="q1" value="〇" required> 〇（正しい）</label>
-                    <label><input type="radio" name="q1" value="✕"> ✕（間違い）</label>
+                    <label>
+                        <input type="radio" name="q1" value="A" required>
+                        音声A
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q1" value="B">
+                        音声B
+                    </label>
                 </div>
             </div>
 
