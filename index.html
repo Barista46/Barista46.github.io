@@ -116,6 +116,43 @@
                     </label>
                 </div>
             </div>
+            
+            
+            <div class="quiz-card">
+                <div class="quiz-question">
+                    Q2. 
+                </div>
+
+                <div class="audio-buttons">
+                    <button type="button" onclick="playAudio('audioA1', this)">
+                        ▶ 音声A
+                    </button>
+
+                    <button type="button" onclick="playAudio('audioB1', this)">
+                        ▶ 音声B
+                    </button>
+                </div>
+
+                <audio id="audioA1">
+                    <source src="q1_A.wav" type="audio/wav">
+                </audio>
+
+                <audio id="audioB1">
+                    <source src="q1_B.wav" type="audio/wav">
+                </audio>
+
+                <div class="options">
+                    <label>
+                        <input type="radio" name="q1" value="A" required>
+                        音声A
+                    </label>
+
+                    <label>
+                        <input type="radio" name="q1" value="B">
+                        音声B
+                    </label>
+                </div>
+            </div>
 
             <div class="quiz-card">
                 <div class="quiz-question">Q2. トマトは「野菜」ではなく「果物」に分類される。</div>
